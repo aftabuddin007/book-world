@@ -2,7 +2,10 @@ import React from 'react';
 import { useLoaderData } from 'react-router';
 import { useParams } from 'react-router';
 import { addToStoreDB } from '../../Utilities/AddToDB';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
+const MySwal = withReactContent(Swal)
 const BookDetails = () => {
     const {id} = useParams();
     const bookId = parseInt(id)
@@ -15,6 +18,19 @@ publisher
 }=singleBooks ||{};
 const handleAddToRead = id=>{
   addToStoreDB(id)
+
+MySwal.fire({
+  title: <p>Hello World</p>,
+  didOpen: () => {
+    
+    MySwal.showLoading()
+  },
+}).then(() => {
+  return MySwal.fire(<p>Shorthand works too</p>)
+})
+
+
+
 }
 
     return (
@@ -34,7 +50,7 @@ const handleAddToRead = id=>{
     
     <div className='border-1-b border-b border-gray-300'>
         <span className='font-bold text-black flex'>Tags: {
-        tags.map((tag)=><p className='text-green-400' > {tag}</p>)
+        tags.map((tag)=><p className='text-green-400' key={bookId} > {tag}</p>)
     }</span>
     </div>
     <div className='border-1-b border-b border-gray-300 '>
